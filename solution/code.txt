@@ -1,0 +1,70 @@
+/*
+user can access the data inside any file
+and find the average of all the numbers
+and the max value.
+*/
+#include<stdio.h>
+void display(int arr[], int n){//to display list
+	int i;
+	printf("\nList - ");
+	for(i=0;i<n;i++){
+		printf(" %d ",arr[i]);
+	}
+}
+double avg(int arr[], int n){//find average
+	int i;
+	double sum,avg;
+	printf("\nFinding average........");
+	for(i=0;i<n;i++){
+		sum=sum+arr[i];
+	}
+	avg=sum/n;
+	return avg;
+}
+
+void sort(int arr[], int n){//sort the array to find the max value
+	int i,j,temp;
+	printf("\nFinding Max element....");
+	for(i=0;i<n-1;i++){
+		for(j=0;j<n-i-1;j++){
+			if(arr[j]>arr[j+1]){
+				temp=arr[j];
+				arr[j]=arr[j+1];
+				arr[j+1]=temp;
+			}
+		}
+	}
+}
+
+int main(){
+	FILE *file;//file pointer
+	char s[20],c;
+	int i,arr[100],d;
+	double average;
+	do{
+		printf("\nEnter the name of the file = ");
+		fflush(stdin);
+		gets(s);
+		file=fopen(s,"r");//opens file
+		if(file==NULL){//if file doesnot exist
+			printf("\nFile not found.");
+		}
+		else{//if file exists
+			fscanf(file,"%d",&d);//accepts the value from the file
+			i=0;
+			while(fscanf(file,"%d",&arr[i])!=EOF){//runs till the pointer reaches the end of the file
+				i++;
+			}
+			display(arr,d);
+			average=avg(arr,d);
+			sort(arr,d);
+			printf("\nResults :- ");//printing results
+			printf("\nAverage = %f",average);
+			printf("\tMax element = %d",arr[d-1]);
+		}
+		printf("\nDo you want to try again(yY)? = ");
+		fflush(stdin);
+		scanf("%c",&c);
+	}while(c=='y' || c=='Y');
+	return 0;
+}
